@@ -55,8 +55,40 @@ pub fn eat_at_restaurant() {
 
     let order1 = back_of_house::Appetizer::Soup;
     let order2 = back_of_house::Appetizer::Salad;
+
+    use crate::front_of_house::hosting;
+    hosting::add_to_waitlist();
 }
 
 fn deliver_order() {}
 
+use std::collections::HashMap;
 
+fn main() {
+    let mut map = HashMap::new();
+    map.insert(1, 2);
+}
+
+use std::fmt;
+use std::io;
+
+fn function1() -> fmt::Result { /* */ }
+fn function2() -> io::Result<()> { /* */ }
+
+use std::fmt::Result;
+use std::io::Result as IoResult;
+
+fn function3() -> Result { /* */ }
+fn function4() -> IoResult<()> { /* */ }
+
+use std::cmp::Ordering;
+use std::io;
+
+use std::{cmp::Ordering, io};
+
+use std::io;
+use std::io::Write;
+
+use std::io::{self, Write};
+
+use std::collections::*;
