@@ -34,12 +34,11 @@ fn main() {
     // so “first” becomes “irst-fay.”
     // Words that start with a vowel have “hay” added to the end instead (“apple” becomes “apple-hay”).
     // Keep in mind the details about UTF-8 encoding!
-    let input = ["first", "apple", "banana", "pig", "goat", "animal", "elephant"];
-    let input = {
-        input.iter()
+    let input = [
+        "first", "apple", "banana", "pig", "goat", "animal", "elephant"
+        ].iter()
         .map(|&s| String::from(s))
-        .collect::<Vec<_>>()
-    };
+        .collect::<Vec<_>>();
 
     fn make_pig_latin(s: &str) -> String {
         let vowels = vec!['a', 'e', 'i', 'o', 'u'];
@@ -64,7 +63,11 @@ fn main() {
         .map(|s| make_pig_latin(s))
         .collect::<Vec<_>>()
     };
-    print!("{:?}", output);
+
+    for s in output {
+        print!("{s} ");
+    }
+    println!();
 
 
     // 3.
@@ -73,5 +76,38 @@ fn main() {
     // For example, “Add Sally to Engineering” or “Add Amir to Sales.”
     // Then let the user retrieve a list of all people in a department or
     // all people in the company by department, sorted alphabetically.
+    let input = [
+        "Add Sally to Engineering",
+        "Add Amir to Sales",
+        "Add Brian to Engineering",
+        "Add Jane to Design",
+        "Add Mike to Executive",
+        ].iter()
+        .map(|&s| String::from(s))
+        .collect::<Vec<_>>();
 
+    let mut map = HashMap::new();
+    
+    for s in input {
+        let split_s = s.split_whitespace().collect::<Vec<_>>();
+
+        if split_s.len() != 4
+            || split_s.get(0).copied().unwrap() != "Add"
+            || split_s.get(2).copied().unwrap() != "to" {
+            continue;
+        }
+
+        let name = String::from(split_s.get(1).copied().unwrap());
+        let department = String::from(split_s.get(3).copied().unwrap());
+        let vec = map.entry(department).or_insert(Vec::new());
+        vec.push(name);
+        vec.sort();
+    }
+
+    let mut output = Vec::from_iter(map.iter());
+    output.sort();
+
+    for (department, names) in output {
+        println!("{}: {:?}", department, names);
+    }
 }
